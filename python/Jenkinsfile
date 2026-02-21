@@ -1,0 +1,85 @@
+pipeline {
+    agent any
+
+    environment {
+        REPO_URL   = "https://github.com/rajesh-ramalingam04/devops-lab.git"
+        IMAGE_NAME = "python-app"
+        IMAGE_TAG  = "v1"
+        CONTAINER  = "python-app"
+        EMAIL_TO   = "rrajesh04@outlook.com"
+    }
+
+    stages {
+
+        stage('Checkout Code') {
+            steps {
+                git branch: 'main',
+                    url: "${REPO_URL}"
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                sh '''
+                    cd python
+                    docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .
+                '''
+            }
+        }
+
+        stage('Stop & Remove Old Container') {
+            steps {
+                sh '''
+                    docker stop ${CONTAINER} || true
+                    docker rm ${CONTAINER} || true
+                '''
+            }
+        }
+
+        stage('Run Docker Container') {
+            steps {
+                sh '''
+                    docker run -d \
+                    --name ${CONTAINER} \
+                    -p 5000:5000 \
+                    ${IMAGE_NAME}:${IMAGE_TAG}
+                '''
+            }
+        }
+    }
+
+    post {
+
+        success {
+            emailext(
+                subject: "✅ Jenkins SUCCESS: ${JOB_NAME} #${BUILD_NUMBER}",
+                body: """
+                <h2>Pipeline Success ✅</h2>
+                <p><b>Job:</b> ${JOB_NAME}</p>
+                <p><b>Build:</b> #${BUILD_NUMBER}</p>
+                <p><b>URL:</b> <a href="${BUILD_URL}">${BUILD_URL}</a></p>
+                """,
+                to: "${EMAIL_TO}",
+                mimeType: 'text/html'
+            )
+        }
+
+        failure {
+            emailext(
+                subject: "❌ Jenkins FAILED: ${JOB_NAME} #${BUILD_NUMBER}",
+                body: """
+                <h2>Pipeline Failed ❌</h2>
+                <p><b>Job:</b> ${JOB_NAME}</p>
+                <p><b>Build:</b> #${BUILD_NUMBER}</p>
+                <p><b>Check logs:</b> <a href="${BUILD_URL}">${BUILD_URL}</a></p>
+                """,
+                to: "${EMAIL_TO}",
+                mimeType: 'text/html'
+            )
+        }
+
+        always {
+            sh 'docker ps -a'
+        }
+    }
+}
