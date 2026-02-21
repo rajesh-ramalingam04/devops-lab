@@ -7,11 +7,12 @@ WORKDIR /app
 # Copy dependency file first (layer caching)
 COPY requirements.txt .
 
-# Install dependencies
+# Install dependencies.
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application code
 COPY app.py .
+
 #expose port to 5000 python default port
 EXPOSE 5000
 
