@@ -5,7 +5,8 @@
 - Cloud (AWS / Azure)
 - Docker & Kubernetes
 - CI/CD pipelines
+- Python
 - MLOps concepts
 - End-to-end ML pipelines
 
-Author: Rajesh R
+Author: Rajesh
