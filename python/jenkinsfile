@@ -1,0 +1,90 @@
+pipeline {
+    agent any
+
+    environment {
+        GIT_USERNAME = "rajesh-ramalingam04"
+        GIT_EMAIL    = "rrajesh04@outlook.com"
+        REPO_URL     = "https://github.com/rajesh-ramalingam04/devops-lab.git"
+        IMAGE_NAME   = "python-app"
+        IMAGE_TAG    = "v1"
+        CONTAINER    = "python-app"
+    }
+
+    stages {
+
+        stage('Check Environment') {
+            steps {
+                sh '''
+                    echo "User: $(whoami)"
+                    docker --version
+                    git --version
+                '''
+            }
+        }
+
+        stage('Configure Git') {
+            steps {
+                sh '''
+                    git config --global user.name "${GIT_USERNAME}"
+                    git config --global user.email "${GIT_EMAIL}"
+                '''
+            }
+        }
+
+        stage('Clone Repository') {
+            steps {
+                git branch: 'main', url: "${REPO_URL}"
+            }
+        }
+
+        stage('Move to Python Directory') {
+            steps {
+                sh '''
+                    cd python
+                    ls -la
+                '''
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                sh '''
+                    cd python
+                    docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .
+                '''
+            }
+        }
+
+        stage('Stop & Remove Old Container (if exists)') {
+            steps {
+                sh '''
+                    docker stop ${CONTAINER} || true
+                    docker rm ${CONTAINER} || true
+                '''
+            }
+        }
+
+        stage('Run Docker Container') {
+            steps {
+                sh '''
+                    docker run -d \
+                    --name ${CONTAINER} \
+                    -p 5000:5000 \
+                    ${IMAGE_NAME}:${IMAGE_TAG}
+                '''
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "✅ Pipeline executed successfully!"
+        }
+        failure {
+            echo "❌ Pipeline failed. Check logs."
+        }
+        always {
+            sh 'docker ps -a'
+        }
+    }
+}
