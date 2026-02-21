@@ -1,0 +1,127 @@
+🔹 What is venv (Virtual Environment)?
+
+venv is an isolated Python environment created per project.
+
+It keeps:
+
+Python packages
+
+Package versions
+
+Dependencies
+
+separate from system Python.
+
+👉 Think of venv like a lightweight Docker container for Python.
+
+🔹 Why venv is Required (Very Important)
+1️⃣ Avoid Dependency Conflicts
+
+Different projects need different versions.
+
+Example:
+
+Project A → numpy 1.26
+
+Project B → numpy 1.21
+
+Without venv → conflict
+With venv → no issue
+
+2️⃣ Protect System Python (Ubuntu Rule)
+
+Ubuntu uses Python for OS tools.
+
+Installing packages globally can:
+
+Break OS commands
+
+Break apt
+
+Cause security issues
+
+venv keeps OS Python safe.
+
+3️⃣ Mandatory for DevOps / MLOps
+
+Used in:
+
+CI/CD pipelines
+
+Docker images
+
+ML training jobs
+
+Kubernetes workloads
+
+No company runs ML without virtual environments.
+
+4️⃣ Reproducible Builds
+
+Same code + same venv = same result
+Critical for AI models & production systems.
+
+🔹 When to Use venv
+
+✔ Every Python project
+✔ Every ML / AI project
+✔ Every CI/CD job
+✔ Every Docker build
+
+Rule: One project = one venv
+
+🔹 Steps to Install & Configure venv (Ubuntu / WSL)
+Step 1️⃣ Install Required Packages (One-Time)
+sudo apt update
+sudo apt install -y python3 python3-venv python3-pip
+Step 2️⃣ Go to Project Directory
+cd ~/workspace/local-repo/devops-lab/python
+Step 3️⃣ Create Virtual Environment
+python3 -m venv venv
+
+Creates a folder:
+
+python/
+└── venv/
+Step 4️⃣ Activate Virtual Environment
+source venv/bin/activate
+
+Prompt changes to:
+
+(venv) nachi@DESKTOP-DN7FT63:...
+
+✔ This means venv is active
+
+Step 5️⃣ Install Python Packages (Inside venv)
+python -m pip install numpy
+Step 6️⃣ Verify Installation
+python -c "import numpy; print(numpy.__version__)"
+Step 7️⃣ Save Dependencies (Best Practice)
+pip freeze > requirements.txt
+
+Used later in:
+
+CI/CD
+
+Docker
+
+Kubernetes
+
+Step 8️⃣ Deactivate When Done
+deactivate
+🔹 Key Commands Summary (Cheat Sheet)
+python3 -m venv venv
+source venv/bin/activate
+python -m pip install <package>
+pip freeze > requirements.txt
+deactivate
+🔹 Common Mistakes (Avoid)
+
+❌ sudo pip install ...
+❌ apt install numpy
+❌ Installing packages without activating venv
+❌ Sharing project without requirements.txt
+
+🔹 Interview One-Liner (Very Useful)
+
+“We use Python virtual environments to isolate dependencies per project, avoid conflicts, protect system Python, and ensure reproducible builds in CI/CD and MLOps pipelines.”
