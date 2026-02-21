@@ -1,0 +1,10 @@
+git config --global user.name "rajesh-ramalingam04"
+git config --global user.email "rrajesh04@outlook.com"
+
+PAT: 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
+
+git remote add origin https://github.com/rajesh-ramalingam04/devops-lab.git
+
+
+docker build -t python-hello:v1 .
+docker run -d --name python-hello -p 80:5000 python-hello:v1
