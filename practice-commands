@@ -1,2 +1,14 @@
+#Docker
 docker build -t python-app:v1 .
 docker run -d --name python-app -p 5000:5000 python-app:v1
+
+#App link
+http://localhost:5000/
+
+#Jenkins links
+http://localhost:8080/
+
+#Jenkins command
+sudo snap start jenkins
+sudo snap stop jenkins
+sudo snap restart jenkins
