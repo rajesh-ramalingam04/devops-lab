@@ -55,9 +55,8 @@ pipeline {
             steps {
                 sh '''
                     echo "Opening app in Chrome at http://localhost:5000/"
-                    "/mnt/c/Program Files/Google/Chrome/Application/chrome.exe" http://localhost:5000/ > /dev/null 2>&1 &
+                    wslview http://localhost:5000/ 2>/dev/null || sensible-browser http://localhost:5000/ 2>/dev/null || echo "App is ready at http://localhost:5000/"
                     sleep 2
-                    echo "Chrome opened with http://localhost:5000/"
                 '''
             }
         }
