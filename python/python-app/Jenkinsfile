@@ -55,7 +55,7 @@ pipeline {
             steps {
                 sh '''
                     echo "Opening app in Chrome..."
-                    DISPLAY=:0 google-chrome --new-window http://localhost:5000/ > /dev/null 2>&1 &
+                    nohup google-chrome --no-sandbox --disable-gpu http://localhost:5000/ &
                     sleep 3
                     echo "✅ Chrome opened with http://localhost:5000/"
                 '''
