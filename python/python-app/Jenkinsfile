@@ -4,7 +4,6 @@ pipeline {
         IMAGE_NAME = "python-app-image"
         IMAGE_TAG  = "v1"
         CONTAINER  = "python-app-container"
-        EMAIL_RECIPIENT = "rrajesh04@outlook.com"
     }
     stages {
         stage('Build Docker New Image') {
