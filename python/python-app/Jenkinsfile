@@ -54,10 +54,10 @@ pipeline {
         stage('Open App in Browser') {
             steps {
                 sh '''
-                    echo "Opening app in Windows Chrome..."
-                    powershell.exe -Command "Start-Process 'http://localhost:5000'" 2>/dev/null || cmd.exe /c start "" http://localhost:5000/ 2>/dev/null || echo "Browser command completed"
+                    echo "Opening app in Windows Chrome at http://localhost:5000/"
+                    explorer.exe http://localhost:5000/ 2>/dev/null || true
                     sleep 2
-                    echo "Browser opened with http://localhost:5000/"
+                    echo "Browser command sent"
                 '''
             }
         }
