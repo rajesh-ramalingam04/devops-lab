@@ -5,7 +5,18 @@ pipeline {
         IMAGE_TAG  = "v1"
         CONTAINER  = "python-app-container"
     }
+    triggers {
+        pollSCM('H/5 * * * *')
+    }
     stages {
+        stage('Check Changes') {
+            when {
+                changeset "python/python-app/**"
+            }
+            steps {
+                echo "Changes detected in python/python-app, proceeding with build..."
+            }
+        }
         stage('Build Docker New Image') {
             steps {
                 sh '''
