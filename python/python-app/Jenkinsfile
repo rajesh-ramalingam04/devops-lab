@@ -33,33 +33,6 @@ pipeline {
                 '''
             }
         }
-        stage('Verify App Running') {
-            steps {
-                sh '''
-                    echo "Waiting for app to start..."
-                    sleep 3
-                    for i in {1..10}; do
-                        if curl -f http://localhost:5000/ > /dev/null 2>&1; then
-                            echo "✅ App is running at http://localhost:5000/"
-                            exit 0
-                        fi
-                        echo "Attempt $i: Waiting for app to be ready..."
-                        sleep 2
-                    done
-                    echo "App failed to start"
-                    exit 1
-                '''
-            }
-        }
-        stage('Open App in Browser') {
-            steps {
-                sh '''
-                    echo "Opening app in Chrome at http://localhost:5000/"
-                    wslview http://localhost:5000/ 2>/dev/null || sensible-browser http://localhost:5000/ 2>/dev/null || echo "App is ready at http://localhost:5000/"
-                    sleep 2
-                '''
-            }
-        }
     }
     post {
         success {
