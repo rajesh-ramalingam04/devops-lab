@@ -203,59 +203,69 @@ def home():
             
             .button-container {
                 margin-top: 40px;
-            }
-            
-            .btn {
-                background: linear-gradient(135deg, #667eea, #764ba2);
-                color: white;
-                padding: 16px 40px;
-                border: none;
-                border-radius: 50px;
-                font-size: 16px;
-                font-weight: 600;
-                cursor: pointer;
-                transition: all 0.3s ease;
-                box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
-                animation: fadeInUp 1.4s ease-out;
-                margin: 0 10px;
-            }
-            
-            .btn:hover {
-                transform: translateY(-4px);
-                box-shadow: 0 15px 35px rgba(102, 126, 234, 0.6);
-                background: linear-gradient(135deg, #764ba2, #f093fb);
-            }
-            
-            .btn:active {
-                transform: translateY(-2px);
+                display: none;
             }
             
             .stats {
-                display: flex;
-                justify-content: space-around;
-                margin-top: 50px;
-                padding-top: 30px;
-                border-top: 2px solid rgba(0, 0, 0, 0.1);
+                display: none;
             }
             
-            .stat-item {
-                animation: fadeInUp 1.6s ease-out;
+            /* Additional Advanced Styles */
+            .glow-effect {
+                position: absolute;
+                width: 300px;
+                height: 300px;
+                background: radial-gradient(circle, rgba(102, 126, 234, 0.15) 0%, transparent 70%);
+                border-radius: 50%;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                animation: pulseGlow 3s ease-in-out infinite;
+                pointer-events: none;
             }
             
-            .stat-number {
-                font-size: 36px;
-                font-weight: 800;
-                background: linear-gradient(135deg, #ff6b6b, #667eea);
+            @keyframes pulseGlow {
+                0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+                50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+            }
+            
+            .gradient-text-effect {
+                background: linear-gradient(90deg, #ff6b6b, #c44569, #5a67d8, #667eea, #764ba2, #f093fb, #ff6b6b);
+                background-size: 200% auto;
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
                 background-clip: text;
+                animation: gradientFlow 8s linear infinite;
             }
             
-            .stat-label {
-                font-size: 14px;
-                color: #999;
-                margin-top: 8px;
-                font-weight: 600;
+            @keyframes gradientFlow {
+                0% { background-position: 0% center; }
+                100% { background-position: 200% center; }
+            }
+            
+            /* Card hover effect */
+            .container:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 40px 100px rgba(0, 0, 0, 0.2);
+                background: rgba(255, 255, 255, 1);
+            }
+            
+            /* Neon glow text effect */
+            .neon-glow {
+                text-shadow: 0 0 10px rgba(102, 126, 234, 0.8),
+                            0 0 20px rgba(102, 126, 234, 0.6),
+                            0 0 30px rgba(102, 126, 234, 0.4);
+                animation: neonFlicker 3s infinite;
+            }
+            
+            @keyframes neonFlicker {
+                0%, 100% { text-shadow: 0 0 10px rgba(102, 126, 234, 0.8), 0 0 20px rgba(102, 126, 234, 0.6); }
+                50% { text-shadow: 0 0 20px rgba(102, 126, 234, 1), 0 0 40px rgba(102, 126, 234, 0.8); }
+            }
+            
+            /* Smooth transitions */
+            * {
+                transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             }
         </style>
     </head>
@@ -271,26 +281,7 @@ def home():
             <div class="separator-line"></div>
             <p>Have a Nice Day! 😊</p>
             <div class="emoji-section">😄✨🚀</div>
-            
-            <div class="button-container">
-                <button class="btn">Explore</button>
-                <button class="btn">Learn More</button>
-            </div>
-            
-            <div class="stats">
-                <div class="stat-item">
-                    <div class="stat-number">100+</div>
-                    <div class="stat-label">Projects</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">99%</div>
-                    <div class="stat-label">Success</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">24/7</div>
-                    <div class="stat-label">Support</div>
-                </div>
-            </div>
+            <div class="glow-effect"></div>
         </div>
     </body>
     </html>
