@@ -40,13 +40,13 @@ pipeline {
                     sleep 3
                     for i in {1..10}; do
                         if curl -f http://localhost:5000/ > /dev/null 2>&1; then
-                            echo "✅ App is running at http://localhost:5000/"
+                            echo "App is running at http://localhost:5000/"
                             exit 0
                         fi
                         echo "Attempt $i: Waiting for app to be ready..."
                         sleep 2
                     done
-                    echo "❌ App failed to start"
+                    echo "App failed to start"
                     exit 1
                 '''
             }
@@ -57,19 +57,19 @@ pipeline {
                     echo "Opening app in browser at http://localhost:5000/"
                     (chromium-browser http://localhost:5000/ 2>/dev/null || python3 -m webbrowser http://localhost:5000/) &
                     sleep 2
-                    echo "✅ Browser opened with http://localhost:5000/"
+                    echo "Browser opened with http://localhost:5000/"
                 '''
             }
         }
     }
     post {
         success {
-            echo "✅ Build & Deployment Successful ✅"
+            echo "Build & Deployment Successful"
             emailext(
                 to: "${EMAIL_RECIPIENT}",
                 subject: "Jenkins Build SUCCESS: ${JOB_NAME} #${BUILD_NUMBER}",
                 body: """
-                ✅ Build & Deployment Successful ✅
+                Build & Deployment Successful
                 Project: ${JOB_NAME}
                 Build Number: ${BUILD_NUMBER}
                 Build URL: ${BUILD_URL}
@@ -77,12 +77,12 @@ pipeline {
             )
         }
         failure {
-            echo "❌ Pipeline Failed ❌"
+            echo "Pipeline Failed"
             emailext(
                 to: "${EMAIL_RECIPIENT}",
                 subject: "Jenkins Build FAILURE: ${JOB_NAME} #${BUILD_NUMBER}",
                 body: """
-                ❌ Pipeline Failed ❌
+                Pipeline Failed
                 Project: ${JOB_NAME}
                 Build Number: ${BUILD_NUMBER}
                 Build URL: ${BUILD_URL}
