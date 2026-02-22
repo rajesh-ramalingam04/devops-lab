@@ -58,7 +58,7 @@ pipeline {
                 Project: ${JOB_NAME}
                 Build Number: ${BUILD_NUMBER}
                 Build URL: ${BUILD_URL}
-                Check console output for errors.
+                Check console output for errors..
                 """
             )
         }
