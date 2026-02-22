@@ -12,3 +12,6 @@ http://localhost:8080/
 sudo snap start jenkins
 sudo snap stop jenkins
 sudo snap restart jenkins
+
+#get ngrok link
+ngrok http 8080
