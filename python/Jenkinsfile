@@ -4,6 +4,7 @@ pipeline {
         IMAGE_NAME = "python-app"
         IMAGE_TAG  = "v1"
         CONTAINER  = "python-app"
+        EMAIL_RECIPIENT = "rrajesh04@outlook.com"
     }
     stages {
         stage('Build Docker Image') {
@@ -36,9 +37,30 @@ pipeline {
     post {
         success {
             echo "✅ Build & Deployment Successful ✅"
+            emailext(
+                to: "${EMAIL_RECIPIENT}",
+                subject: "Jenkins Build SUCCESS: ${JOB_NAME} #${BUILD_NUMBER}",
+                body: """
+                ✅ Build & Deployment Successful ✅
+                Project: ${JOB_NAME}
+                Build Number: ${BUILD_NUMBER}
+                Build URL: ${BUILD_URL}
+                """
+            )
         }
         failure {
             echo "❌ Pipeline Failed ❌"
+            emailext(
+                to: "${EMAIL_RECIPIENT}",
+                subject: "Jenkins Build FAILURE: ${JOB_NAME} #${BUILD_NUMBER}",
+                body: """
+                ❌ Pipeline Failed ❌
+                Project: ${JOB_NAME}
+                Build Number: ${BUILD_NUMBER}
+                Build URL: ${BUILD_URL}
+                Check console output for errors.
+                """
+            )
         }
         always {
             sh 'docker ps -a'
