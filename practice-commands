@@ -13,5 +13,8 @@ sudo snap start jenkins
 sudo snap stop jenkins
 sudo snap restart jenkins
 
-#get ngrok link
+#get ngrok link 
+#after ran this command un ubuntu you get ngrok linka
+#use it in github webhook everytime 
 ngrok http 8080
+#Sample: https://sonia-extrasensorial-unadmirably.ngrok-free.dev
