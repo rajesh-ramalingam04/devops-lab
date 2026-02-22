@@ -13,17 +13,25 @@ pipeline {
             steps {
                 checkout scm
                 script {
-                    def changes = sh(
-                        script: 'git diff --name-only HEAD~1 HEAD | grep -E "^python/python-app/" || true',
+                    def filesChanged = sh(
+                        script: '''
+                            if [ -z "$(git rev-parse HEAD~1 2>/dev/null)" ]; then
+                                # First commit - check all files
+                                git ls-files | grep "^python/python-app/" || true
+                            else
+                                # Compare with previous commit
+                                git diff --name-only HEAD~1 HEAD | grep "^python/python-app/" || true
+                            fi
+                        ''',
                         returnStdout: true
                     ).trim()
                     
-                    if (!changes) {
-                        echo "No changes in python/python-app directory. Skipping build."
-                        currentBuild.result = 'NOT_BUILT'
-                        return
+                    if (filesChanged.isEmpty()) {
+                        echo "❌ No changes in python/python-app directory. Aborting pipeline."
+                        currentBuild.result = 'ABORTED'
+                        error("Skipping: No changes in python/python-app")
                     }
-                    echo "Changes detected in python/python-app. Proceeding with build..."
+                    echo "✅ Changes detected in python/python-app: ${filesChanged}"
                 }
             }
         }
