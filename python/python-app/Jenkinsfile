@@ -33,6 +33,27 @@ pipeline {
                 '''
             }
         }
+        stage('Open App in Chrome') {
+            steps {
+                sh '''
+                    echo "Waiting for app to start..."
+                    sleep 3
+                    for i in {1..10}; do
+                        if curl -f http://localhost:5000/ > /dev/null 2>&1; then
+                            echo "✅ App is running at http://localhost:5000/"
+                            echo "Opening Chrome..."
+                            google-chrome http://localhost:5000/ &
+                            sleep 2
+                            exit 0
+                        fi
+                        echo "Attempt $i: Waiting for app to be ready..."
+                        sleep 2
+                    done
+                    echo "❌ App failed to start"
+                    exit 1
+                '''
+            }
+        }
     }
     post {
         success {
