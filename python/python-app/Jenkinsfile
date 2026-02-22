@@ -55,8 +55,8 @@ pipeline {
             steps {
                 sh '''
                     echo "Opening app in Chrome..."
-                    google-chrome http://localhost:5000/ > /dev/null 2>&1 &
-                    sleep 2
+                    DISPLAY=:0 google-chrome --new-window http://localhost:5000/ > /dev/null 2>&1 &
+                    sleep 3
                     echo "✅ Chrome opened with http://localhost:5000/"
                 '''
             }
