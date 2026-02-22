@@ -1,6 +1,5 @@
 pipeline {
     agent any
-
     environment {
         REPO_URL   = "https://github.com/rajesh-ramalingam04/devops-lab.git"
         IMAGE_NAME = "python-app"
@@ -8,16 +7,13 @@ pipeline {
         CONTAINER  = "python-app"
         EMAIL_TO   = "rrajesh04@outlook.com"
     }
-
     stages {
-
         stage('Checkout Code') {
             steps {
                 git branch: 'main',
                     url: "${REPO_URL}"
             }
         }
-
         stage('Build Docker Image') {
             steps {
                 sh '''
@@ -26,7 +22,6 @@ pipeline {
                 '''
             }
         }
-
         stage('Stop & Remove Old Container') {
             steps {
                 sh '''
@@ -35,7 +30,6 @@ pipeline {
                 '''
             }
         }
-
         stage('Run Docker Container') {
             steps {
                 sh '''
@@ -47,7 +41,6 @@ pipeline {
             }
         }
     }
-
     post {
 
         success {
@@ -63,7 +56,6 @@ pipeline {
                 mimeType: 'text/html'
             )
         }
-
         failure {
             emailext(
                 subject: "❌ Jenkins FAILED: ${JOB_NAME} #${BUILD_NUMBER}",
@@ -77,7 +69,6 @@ pipeline {
                 mimeType: 'text/html'
             )
         }
-
         always {
             sh 'docker ps -a'
         }
