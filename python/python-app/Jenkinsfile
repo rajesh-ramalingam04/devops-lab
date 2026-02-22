@@ -11,10 +11,12 @@ pipeline {
     stages {
         stage('Checking python-app directory changes') {
             when {
-                changeset "python/python-app/**"
+                not {
+                    changeset "python/python-app/**"
+                }
             }
             steps {
-                echo "Changes detected in python/python-app, proceeding with build..."
+                error("No changes detected in python/python-app directory. Build aborted.")
             }
         }
         stage('Build Docker New Image') {
