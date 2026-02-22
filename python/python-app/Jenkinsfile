@@ -7,7 +7,7 @@ pipeline {
         EMAIL_RECIPIENT = "rrajesh04@outlook.com"
     }
     stages {
-        stage('Build Docker Image') {
+        stage('Build Docker New Image') {
             steps {
                 sh '''
                     cd python/python-app
@@ -15,7 +15,7 @@ pipeline {
                 '''
             }
         }
-        stage('Stop Old Container') {
+        stage('Stop and Remove old Container') {
             steps {
                 sh '''
                     docker stop ${CONTAINER} || true
@@ -23,7 +23,7 @@ pipeline {
                 '''
             }
         }
-        stage('Run Container') {
+        stage('Run New Container') {
             steps {
                 sh '''
                     docker run -d \
@@ -37,30 +37,9 @@ pipeline {
     post {
         success {
             echo "Pipeline Suceeded"
-            emailext(
-                to: "${EMAIL_RECIPIENT}",
-                subject: "Jenkins Build SUCCESS: ${JOB_NAME} #${BUILD_NUMBER}",
-                body: """
-                Build & Deployment Successful
-                Project: ${JOB_NAME}
-                Build Number: ${BUILD_NUMBER}
-                Build URL: ${BUILD_URL}
-                """
-            )
         }
         failure {
             echo "Pipeline Failed"
-            emailext(
-                to: "${EMAIL_RECIPIENT}",
-                subject: "Jenkins Build FAILURE: ${JOB_NAME} #${BUILD_NUMBER}",
-                body: """
-                Pipeline Failed
-                Project: ${JOB_NAME}
-                Build Number: ${BUILD_NUMBER}
-                Build URL: ${BUILD_URL}
-                Check console output for errors..
-                """
-            )
         }
         always {
             sh 'docker ps -a'
