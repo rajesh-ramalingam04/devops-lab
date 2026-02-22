@@ -1,7 +1,13 @@
-print("Hello Rajesh")
+from flask import Flask
 
-print("Welcome to Python Lab")
-a = 10
-b = 20
-print("Sum of a and b is: ", a + b)
+app = Flask(__name__)
 
+@app.route('/')
+def home():
+    return """
+    <h1>Hello Rajesh</h1>
+    <p>Welcome to Python Lab</p>
+    """
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000, debug=False)
