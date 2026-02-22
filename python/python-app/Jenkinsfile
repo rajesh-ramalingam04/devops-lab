@@ -54,10 +54,10 @@ pipeline {
         stage('Open App in Browser') {
             steps {
                 sh '''
-                    echo "Opening app in Chrome..."
-                    nohup google-chrome --no-sandbox --disable-gpu http://localhost:5000/ &
-                    sleep 3
-                    echo "✅ Chrome opened with http://localhost:5000/"
+                    echo "Opening app in default browser..."
+                    xdg-open http://localhost:5000/ &
+                    sleep 2
+                    echo "✅ Browser opened with http://localhost:5000/"
                 '''
             }
         }
