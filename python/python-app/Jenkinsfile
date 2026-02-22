@@ -5,9 +5,6 @@ pipeline {
         IMAGE_TAG  = "v1"
         CONTAINER  = "python-app-container"
     }
-    triggers {
-        pollSCM('H/5 * * * *')
-    }
     stages {
         stage('Checking python-app directory changes') {
             when {
