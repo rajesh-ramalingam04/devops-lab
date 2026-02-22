@@ -15,95 +15,282 @@ def home():
                 box-sizing: border-box;
             }
             body {
-                background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+                background: linear-gradient(-45deg, #ff6b6b, #ee5a6f, #c44569, #5a67d8, #667eea, #764ba2);
                 background-size: 400% 400%;
-                animation: gradient 15s ease infinite;
+                animation: gradientShift 20s ease infinite;
                 font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
                 height: 100vh;
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 overflow: hidden;
+                position: relative;
             }
-            @keyframes gradient {
+            
+            @keyframes gradientShift {
                 0% { background-position: 0% 50%; }
-                50% { background-position: 100% 50%; }
+                25% { background-position: 100% 50%; }
+                50% { background-position: 100% 100%; }
+                75% { background-position: 0% 0%; }
                 100% { background-position: 0% 50%; }
             }
+            
+            /* Floating particles background */
+            .particles {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                z-index: 0;
+            }
+            
+            .particle {
+                position: absolute;
+                background: rgba(255, 255, 255, 0.5);
+                border-radius: 50%;
+                pointer-events: none;
+            }
+            
+            .particle1 {
+                width: 80px;
+                height: 80px;
+                top: 10%;
+                left: 10%;
+                animation: float 20s infinite ease-in-out;
+                background: rgba(255, 107, 107, 0.3);
+            }
+            
+            .particle2 {
+                width: 60px;
+                height: 60px;
+                top: 70%;
+                right: 10%;
+                animation: float 25s infinite ease-in-out reverse;
+                background: rgba(90, 103, 216, 0.3);
+            }
+            
+            .particle3 {
+                width: 40px;
+                height: 40px;
+                top: 50%;
+                left: 5%;
+                animation: float 30s infinite ease-in-out;
+                background: rgba(118, 75, 162, 0.3);
+            }
+            
+            @keyframes float {
+                0%, 100% { transform: translateY(0px) translateX(0px); }
+                25% { transform: translateY(-50px) translateX(30px); }
+                50% { transform: translateY(-100px) translateX(-30px); }
+                75% { transform: translateY(-50px) translateX(30px); }
+            }
+            
             .container {
                 text-align: center;
-                background: rgba(255, 255, 255, 0.95);
-                padding: 60px;
-                border-radius: 20px;
-                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-                backdrop-filter: blur(10px);
-                max-width: 600px;
-                animation: slideIn 0.8s ease-out;
-                border: 1px solid rgba(255, 255, 255, 0.5);
+                background: rgba(255, 255, 255, 0.98);
+                padding: 80px 60px;
+                border-radius: 30px;
+                box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+                backdrop-filter: blur(20px);
+                max-width: 700px;
+                animation: slideInContainer 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
+                border: 2px solid rgba(255, 255, 255, 0.8);
+                position: relative;
+                z-index: 10;
             }
-            @keyframes slideIn {
+            
+            .container::before {
+                content: '';
+                position: absolute;
+                top: -50%;
+                left: -50%;
+                width: 200%;
+                height: 200%;
+                background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+                animation: shine 3s infinite;
+                pointer-events: none;
+            }
+            
+            @keyframes shine {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+            
+            @keyframes slideInContainer {
                 from {
                     opacity: 0;
-                    transform: translateY(-30px);
+                    transform: translateY(-50px) scale(0.95);
                 }
                 to {
                     opacity: 1;
-                    transform: translateY(0);
+                    transform: translateY(0) scale(1);
                 }
             }
+            
             h1 {
-                background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+                background: linear-gradient(135deg, #ff6b6b, #c44569, #5a67d8, #667eea);
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
                 background-clip: text;
-                font-size: 56px;
-                margin: 0 0 30px 0;
-                font-weight: 700;
+                font-size: 64px;
+                margin: 0 0 25px 0;
+                font-weight: 800;
                 animation: fadeInScale 1s ease-out;
+                letter-spacing: -1px;
             }
+            
             @keyframes fadeInScale {
                 from {
                     opacity: 0;
-                    transform: scale(0.8);
+                    transform: scale(0.7) rotateX(45deg);
                 }
                 to {
                     opacity: 1;
-                    transform: scale(1);
+                    transform: scale(1) rotateX(0deg);
                 }
             }
+            
             p {
                 color: #333;
-                font-size: 28px;
-                margin: 15px 0;
+                font-size: 32px;
+                margin: 20px 0;
                 font-weight: 600;
                 animation: fadeInUp 1.2s ease-out;
+                background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
             }
+            
             @keyframes fadeInUp {
                 from {
                     opacity: 0;
-                    transform: translateY(20px);
+                    transform: translateY(30px);
                 }
                 to {
                     opacity: 1;
                     transform: translateY(0);
                 }
             }
+            
             .emoji-section {
-                font-size: 70px;
-                margin: 30px 0;
-                animation: bounce 2s ease-in-out infinite;
+                font-size: 80px;
+                margin: 40px 0;
+                animation: bounce 2.5s ease-in-out infinite;
+                animation-delay: 0s;
             }
+            
             @keyframes bounce {
-                0%, 100% { transform: translateY(0); }
-                50% { transform: translateY(-15px); }
+                0%, 100% { transform: translateY(0) scale(1); }
+                50% { transform: translateY(-20px) scale(1.1); }
+            }
+            
+            .separator-line {
+                width: 60px;
+                height: 4px;
+                background: linear-gradient(90deg, #ff6b6b, #667eea);
+                margin: 30px auto;
+                border-radius: 2px;
+                animation: expandWidth 1.5s ease-out;
+            }
+            
+            @keyframes expandWidth {
+                from { width: 0; }
+                to { width: 60px; }
+            }
+            
+            .button-container {
+                margin-top: 40px;
+            }
+            
+            .btn {
+                background: linear-gradient(135deg, #667eea, #764ba2);
+                color: white;
+                padding: 16px 40px;
+                border: none;
+                border-radius: 50px;
+                font-size: 16px;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+                animation: fadeInUp 1.4s ease-out;
+                margin: 0 10px;
+            }
+            
+            .btn:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 15px 35px rgba(102, 126, 234, 0.6);
+                background: linear-gradient(135deg, #764ba2, #f093fb);
+            }
+            
+            .btn:active {
+                transform: translateY(-2px);
+            }
+            
+            .stats {
+                display: flex;
+                justify-content: space-around;
+                margin-top: 50px;
+                padding-top: 30px;
+                border-top: 2px solid rgba(0, 0, 0, 0.1);
+            }
+            
+            .stat-item {
+                animation: fadeInUp 1.6s ease-out;
+            }
+            
+            .stat-number {
+                font-size: 36px;
+                font-weight: 800;
+                background: linear-gradient(135deg, #ff6b6b, #667eea);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+            
+            .stat-label {
+                font-size: 14px;
+                color: #999;
+                margin-top: 8px;
+                font-weight: 600;
             }
         </style>
     </head>
     <body>
+        <div class="particles">
+            <div class="particle particle1"></div>
+            <div class="particle particle2"></div>
+            <div class="particle particle3"></div>
+        </div>
+        
         <div class="container">
             <h1>Hello Rajesh 👋</h1>
+            <div class="separator-line"></div>
             <p>Have a Nice Day! 😊</p>
             <div class="emoji-section">😄✨🚀</div>
+            
+            <div class="button-container">
+                <button class="btn">Explore</button>
+                <button class="btn">Learn More</button>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number">100+</div>
+                    <div class="stat-label">Projects</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">99%</div>
+                    <div class="stat-label">Success</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Support</div>
+                </div>
+            </div>
         </div>
     </body>
     </html>
