@@ -5,15 +5,26 @@ pipeline {
         IMAGE_TAG  = "v1"
         CONTAINER  = "python-app-container"
     }
+    options {
+        skipDefaultCheckout()
+    }
     stages {
-        stage('Validate Changes') {
-            when {
-                not {
-                    changeset "python/python-app/**"
-                }
-            }
+        stage('Checkout & Validate') {
             steps {
-                error("No changes in python/python-app. Build skipped.")
+                checkout scm
+                script {
+                    def changes = sh(
+                        script: 'git diff --name-only HEAD~1 HEAD | grep -E "^python/python-app/" || true',
+                        returnStdout: true
+                    ).trim()
+                    
+                    if (!changes) {
+                        echo "No changes in python/python-app directory. Skipping build."
+                        currentBuild.result = 'NOT_BUILT'
+                        return
+                    }
+                    echo "Changes detected in python/python-app. Proceeding with build..."
+                }
             }
         }
         stage('Build Docker New Image') {
