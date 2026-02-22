@@ -6,13 +6,6 @@ pipeline {
         CONTAINER  = "python-app"
     }
     stages {
-        stage('Checkout Code') {
-            steps {
-                git branch: 'main',
-                    url: 'https://github.com/rajesh-ramalingam04/devops-lab.git',
-                    credentialsId: 'github-creds'
-            }
-        }
         stage('Build Docker Image') {
             steps {
                 sh '''
