@@ -43,8 +43,10 @@ def home():
     </head>
     <body>
         <div class="container">
-            <h1>Hello Rajesh</h1>
-            <p>Welcome to Python Lab</p>
+            <h1>Hello Rajesh 👋</h1>
+            <p>Have a Nice Day! 😊</p>
+            <p style="font-size: 60px; margin: 20px 0;">😄✨🚀</p>
+            <p style="color: #667eea; font-size: 16px; margin-top: 30px;">Welcome to Python Lab 🐍</p>
         </div>
     </body>
     </html>
