@@ -54,8 +54,8 @@ pipeline {
         stage('Open App in Browser') {
             steps {
                 sh '''
-                    echo "Opening app in browser at http://localhost:5000/"
-                    (chromium-browser http://localhost:5000/ 2>/dev/null || python3 -m webbrowser http://localhost:5000/) &
+                    echo "Opening app in Windows Chrome..."
+                    cmd.exe /c start https://localhost:5000/ 2>/dev/null || echo "Browser command failed, but app is running"
                     sleep 2
                     echo "Browser opened with http://localhost:5000/"
                 '''
@@ -64,7 +64,7 @@ pipeline {
     }
     post {
         success {
-            echo "Build & Deployment Successful"
+            echo "Pipeline Suceeded"
             emailext(
                 to: "${EMAIL_RECIPIENT}",
                 subject: "Jenkins Build SUCCESS: ${JOB_NAME} #${BUILD_NUMBER}",
