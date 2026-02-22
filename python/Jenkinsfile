@@ -42,10 +42,10 @@ pipeline {
     }
     post {
         success {
-            echo "✅ Build & Deployment Successful"
+            echo "✅ Build & Deployment Successful ✅"
         }
         failure {
-            echo "❌ Pipeline Failed"
+            echo "❌ Pipeline Failed ❌"
         }
         always {
             sh 'docker ps -a'
