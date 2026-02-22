@@ -6,6 +6,26 @@ pipeline {
         CONTAINER  = "python-app-container"
     }
     stages {
+        stage('Checkout & Validate') {
+            steps {
+                checkout scm
+                script {
+                    def filesChanged = sh(
+                        script: '''
+                            git diff --name-only HEAD~1 HEAD | grep "^python/python-app/" || true
+                        ''',
+                        returnStdout: true
+                    ).trim()
+                    
+                    if (filesChanged.isEmpty()) {
+                        echo "No changes in python/python-app directory. Aborting pipeline."
+                        currentBuild.result = 'ABORTED'
+                        error("Skipping: No changes in python/python-app")
+                    }
+                    echo "Changes detected in python/python-app. Proceeding..."
+                }
+            }
+        }
         stage('Build Docker New Image') {
             steps {
                 sh '''
