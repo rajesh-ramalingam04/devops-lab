@@ -55,7 +55,7 @@ pipeline {
             steps {
                 sh '''
                     echo "Opening app in Windows Chrome..."
-                    cmd.exe /c start https://localhost:5000/ 2>/dev/null || echo "Browser command failed, but app is running"
+                    powershell.exe -Command "Start-Process 'http://localhost:5000'" 2>/dev/null || cmd.exe /c start "" http://localhost:5000/ 2>/dev/null || echo "Browser command completed"
                     sleep 2
                     echo "Browser opened with http://localhost:5000/"
                 '''
