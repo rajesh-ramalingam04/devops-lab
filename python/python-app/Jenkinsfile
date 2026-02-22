@@ -54,8 +54,8 @@ pipeline {
         stage('Open App in Browser') {
             steps {
                 sh '''
-                    echo "Opening app in default browser..."
-                    xdg-open http://localhost:5000/ &
+                    echo "Opening app in browser at http://localhost:5000/"
+                    (chromium-browser http://localhost:5000/ 2>/dev/null || python3 -m webbrowser http://localhost:5000/) &
                     sleep 2
                     echo "✅ Browser opened with http://localhost:5000/"
                 '''
