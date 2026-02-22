@@ -6,14 +6,14 @@ pipeline {
         CONTAINER  = "python-app-container"
     }
     stages {
-        stage('Checking python-app directory changes') {
+        stage('Validate Changes') {
             when {
                 not {
                     changeset "python/python-app/**"
                 }
             }
             steps {
-                error("No changes detected in python/python-app directory. Build aborted.")
+                error("No changes in python/python-app. Build skipped.")
             }
         }
         stage('Build Docker New Image') {
