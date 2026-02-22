@@ -55,7 +55,7 @@ pipeline {
             steps {
                 sh '''
                     echo "Opening app in Chrome at http://localhost:5000/"
-                    /mnt/c/Program\ Files/Google/Chrome/Application/chrome.exe http://localhost:5000/ > /dev/null 2>&1 &
+                    "/mnt/c/Program Files/Google/Chrome/Application/chrome.exe" http://localhost:5000/ > /dev/null 2>&1 &
                     sleep 2
                     echo "Chrome opened with http://localhost:5000/"
                 '''
