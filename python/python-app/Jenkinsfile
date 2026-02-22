@@ -9,7 +9,7 @@ pipeline {
         pollSCM('H/5 * * * *')
     }
     stages {
-        stage('Check Changes') {
+        stage('Checking python-app directory changes') {
             when {
                 changeset "python/python-app/**"
             }
