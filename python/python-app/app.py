@@ -1,10 +1,7 @@
-from flask import Flask
+print("Hello Rajesh")
 
-app = Flask(__name__)
+print("Welcome to Python Lab")
+a = 10
+b = 20
+print("Sum of a and b is: ", a + b)
 
-@app.route("/")
-def home():
-    return "Hello from Python Docker container 🚀"
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
