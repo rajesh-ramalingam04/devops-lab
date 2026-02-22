@@ -6,7 +6,7 @@ pipeline {
         CONTAINER  = "python-app-container"
     }
     stages {
-        stage('Checkout & Validate') {
+        stage('Check python-app directory Changes') {
             steps {
                 checkout scm
                 script {
