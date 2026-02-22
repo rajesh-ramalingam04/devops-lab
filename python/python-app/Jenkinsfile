@@ -1,9 +1,9 @@
 pipeline {
     agent any
     environment {
-        IMAGE_NAME = "python-app"
+        IMAGE_NAME = "python-app-image"
         IMAGE_TAG  = "v1"
-        CONTAINER  = "python-app"
+        CONTAINER  = "python-app-container"
         EMAIL_RECIPIENT = "rrajesh04@outlook.com"
     }
     stages {
