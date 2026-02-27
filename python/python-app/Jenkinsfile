@@ -26,7 +26,7 @@ pipeline {
                 }
             }
         }
-        stage('Build Docker New Image..') {
+        stage('Build Docker New Image') {
             steps {
                 sh '''
                     cd python/python-app
